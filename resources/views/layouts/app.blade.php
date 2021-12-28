@@ -9,8 +9,8 @@
   <meta content="" name="keywords">
  
   <!-- Favicons -->
-  <link href="img/favicon.png" rel="icon">
-  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="{{ asset('img/favicon.png') }}" rel="icon">
+  <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" rel="stylesheet">
@@ -19,14 +19,14 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
   <link rel="stylesheet" type="text/css" href="https://kenwheeler.github.io/slick/slick/slick-theme.css">
   <!-- Vendor CSS Files -->
-  <link href="vendor/aos/aos.css" rel="stylesheet">
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="style.css" rel="stylesheet">
+  <link href="{{ asset('style.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -130,14 +130,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!-- Vendor JS Files -->
-<script type="text/javascript" src="vendor/aos/aos.js"></script>
-<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="vendor/glightbox/js/glightbox.min.js"></script>
-<script type="text/javascript" src="vendor/php-email-form/validate.js"></script>
-<script type="text/javascript" src="vendor/swiper/swiper-bundle.min.js"></script>
+<script type="text/javascript" src="{{ asset('vendor/aos/aos.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
+<script type="text/javascript" src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
 
 <!-- Template Main JS File -->
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="{{ asset('main.js') }}"></script>
 
 </body>
 

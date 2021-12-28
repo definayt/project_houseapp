@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,3 +22,6 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'index'])->name('project.detail');
+Route::get('/project/time_schedule/{id}', [App\Http\Controllers\ProjectController::class, 'time_schedule'])->name('time_schedule');
+
