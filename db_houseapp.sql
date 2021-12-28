@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 26, 2021 at 03:41 PM
+-- Generation Time: Dec 28, 2021 at 03:18 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -33,6 +33,81 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `photo_progress`
+--
+
+CREATE TABLE `photo_progress` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `progress_id` bigint(20) UNSIGNED NOT NULL,
+  `file_photo` varchar(50) NOT NULL,
+  `desc` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `progress`
+--
+
+CREATE TABLE `progress` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `project_id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `acc_manager` tinyint(1) NOT NULL,
+  `acc_pengawas` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `progress`
+--
+
+INSERT INTO `progress` (`id`, `project_id`, `date`, `acc_manager`, `acc_pengawas`) VALUES
+(1, 1, '2021-08-31', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project`
+--
+
+CREATE TABLE `project` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `project_name` varchar(50) NOT NULL,
+  `owner_id` bigint(20) UNSIGNED NOT NULL,
+  `manager_id` bigint(20) UNSIGNED NOT NULL,
+  `pengawas_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `lapangan_id` bigint(20) UNSIGNED NOT NULL,
+  `location` varchar(200) NOT NULL,
+  `type` int(4) NOT NULL,
+  `building_area` int(4) NOT NULL,
+  `land_area` int(4) NOT NULL,
+  `house_spec` varchar(500) NOT NULL,
+  `floors` int(2) NOT NULL,
+  `work_duration` int(4) NOT NULL,
+  `rab` decimal(15,0) NOT NULL,
+  `2d_file` varchar(100) NOT NULL,
+  `3d_link` varchar(300) NOT NULL,
+  `animation_video` varchar(100) NOT NULL,
+  `time_schedule` varchar(300) NOT NULL,
+  `rab_file` varchar(300) NOT NULL,
+  `agreement_doc` varchar(300) NOT NULL,
+  `spec_doc` varchar(300) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `working_status` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `project`
+--
+
+INSERT INTO `project` (`id`, `project_name`, `owner_id`, `manager_id`, `pengawas_id`, `lapangan_id`, `location`, `type`, `building_area`, `land_area`, `house_spec`, `floors`, `work_duration`, `rab`, `2d_file`, `3d_link`, `animation_video`, `time_schedule`, `rab_file`, `agreement_doc`, `spec_doc`, `start_date`, `end_date`, `working_status`) VALUES
+(1, 'Rumah Rumahan', 2, 1, 3, 4, 'https://maps.app.goo.gl/mCKw6p8FBDx1ARXcA', 72, 72, 100, '3 Kamar tidur, 2 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 90, '1000000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2021-08-23', '2021-12-20', 100),
+(2, 'My House', 2, 1, 3, 4, 'https://goo.gl/maps/BGLjhypTHELyjzZr5 ', 60, 60, 80, '2 Kamar tidur, 1 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 80, '900000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2022-01-02', '2022-03-25', 5);
 
 -- --------------------------------------------------------
 
@@ -93,6 +168,29 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `photo_progress`
+--
+ALTER TABLE `photo_progress`
+  ADD KEY `progress_id` (`progress_id`);
+
+--
+-- Indexes for table `progress`
+--
+ALTER TABLE `progress`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`);
+
+--
+-- Indexes for table `project`
+--
+ALTER TABLE `project`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_lapangan` (`lapangan_id`),
+  ADD KEY `id_manager` (`manager_id`),
+  ADD KEY `id_owner` (`owner_id`),
+  ADD KEY `id_pengawas` (`pengawas_id`);
+
+--
 -- Indexes for table `roles`
 --
 ALTER TABLE `roles`
@@ -102,7 +200,8 @@ ALTER TABLE `roles`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -115,6 +214,18 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `progress`
+--
+ALTER TABLE `progress`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `project`
+--
+ALTER TABLE `project`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
@@ -125,6 +236,37 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `photo_progress`
+--
+ALTER TABLE `photo_progress`
+  ADD CONSTRAINT `photo_progress_ibfk_1` FOREIGN KEY (`progress_id`) REFERENCES `progress` (`id`);
+
+--
+-- Constraints for table `progress`
+--
+ALTER TABLE `progress`
+  ADD CONSTRAINT `progress_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`);
+
+--
+-- Constraints for table `project`
+--
+ALTER TABLE `project`
+  ADD CONSTRAINT `project_ibfk_1` FOREIGN KEY (`lapangan_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `project_ibfk_2` FOREIGN KEY (`manager_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `project_ibfk_3` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `project_ibfk_4` FOREIGN KEY (`pengawas_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
