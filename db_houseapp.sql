@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2021 at 03:18 PM
+-- Generation Time: Dec 29, 2021 at 03:54 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -33,6 +33,20 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notes`
+--
+
+CREATE TABLE `notes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `project_id` bigint(20) UNSIGNED NOT NULL,
+  `creator_id` bigint(20) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -89,8 +103,8 @@ CREATE TABLE `project` (
   `floors` int(2) NOT NULL,
   `work_duration` int(4) NOT NULL,
   `rab` decimal(15,0) NOT NULL,
-  `2d_file` varchar(100) NOT NULL,
-  `3d_link` varchar(300) NOT NULL,
+  `twod_file` varchar(100) NOT NULL,
+  `threed_link` varchar(300) NOT NULL,
   `animation_video` varchar(100) NOT NULL,
   `time_schedule` varchar(300) NOT NULL,
   `rab_file` varchar(300) NOT NULL,
@@ -105,7 +119,7 @@ CREATE TABLE `project` (
 -- Dumping data for table `project`
 --
 
-INSERT INTO `project` (`id`, `project_name`, `owner_id`, `manager_id`, `pengawas_id`, `lapangan_id`, `location`, `type`, `building_area`, `land_area`, `house_spec`, `floors`, `work_duration`, `rab`, `2d_file`, `3d_link`, `animation_video`, `time_schedule`, `rab_file`, `agreement_doc`, `spec_doc`, `start_date`, `end_date`, `working_status`) VALUES
+INSERT INTO `project` (`id`, `project_name`, `owner_id`, `manager_id`, `pengawas_id`, `lapangan_id`, `location`, `type`, `building_area`, `land_area`, `house_spec`, `floors`, `work_duration`, `rab`, `twod_file`, `threed_link`, `animation_video`, `time_schedule`, `rab_file`, `agreement_doc`, `spec_doc`, `start_date`, `end_date`, `working_status`) VALUES
 (1, 'Rumah Rumahan', 2, 1, 3, 4, 'https://maps.app.goo.gl/mCKw6p8FBDx1ARXcA', 72, 72, 100, '3 Kamar tidur, 2 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 90, '1000000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2021-08-23', '2021-12-20', 100),
 (2, 'My House', 2, 1, 3, 4, 'https://goo.gl/maps/BGLjhypTHELyjzZr5 ', 60, 60, 80, '2 Kamar tidur, 1 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 80, '900000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2022-01-02', '2022-03-25', 5);
 
@@ -142,6 +156,7 @@ CREATE TABLE `users` (
   `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role_id` int(11) NOT NULL,
+  `phone_number` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -151,11 +166,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Falah Robbani', 'manager', '$2y$10$vH4S52S3NrsJdlBVbuMEre5h/qhG0uqHpjtMbQaMkEHr7hZNe9Y2e', 1, NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
-(2, 'Nama Owner', 'owner', '$2y$10$XdikLPZYaxqAKmj2qmmSY.DNQbj3zWVGr2oywUsp1IY9tYyTtEXNy', 2, NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
-(3, 'Nama Pengawas', 'pengawas', '$2y$10$8kxGzi9ZBCLScIDxiMtdruLNVgQofoReOOgngMAxVyC4rgGj4yTre', 3, NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
-(4, 'Nama P.Lapangan', 'lapangan', '$2y$10$8skQMyjL4u8TRyRKz5hKOulfNRGylCghPXyAZp2m2GTdpIanYiFJe', 4, NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46');
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`, `phone_number`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Falah Robbani', 'manager', '$2y$10$vH4S52S3NrsJdlBVbuMEre5h/qhG0uqHpjtMbQaMkEHr7hZNe9Y2e', 1, '085123456789', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
+(2, 'Nama Owner', 'owner', '$2y$10$XdikLPZYaxqAKmj2qmmSY.DNQbj3zWVGr2oywUsp1IY9tYyTtEXNy', 2, '081234567890', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
+(3, 'Nama Pengawas', 'pengawas', '$2y$10$8kxGzi9ZBCLScIDxiMtdruLNVgQofoReOOgngMAxVyC4rgGj4yTre', 3, '088987654321', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
+(4, 'Nama P.Lapangan', 'lapangan', '$2y$10$8skQMyjL4u8TRyRKz5hKOulfNRGylCghPXyAZp2m2GTdpIanYiFJe', 4, '083456789012', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46');
 
 --
 -- Indexes for dumped tables
@@ -166,6 +181,14 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`, `remember_
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notes`
+--
+ALTER TABLE `notes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `creator_id` (`creator_id`),
+  ADD KEY `project_id` (`project_id`);
 
 --
 -- Indexes for table `photo_progress`
@@ -214,6 +237,12 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `notes`
+--
+ALTER TABLE `notes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
@@ -240,6 +269,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `notes`
+--
+ALTER TABLE `notes`
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`creator_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`);
 
 --
 -- Constraints for table `photo_progress`

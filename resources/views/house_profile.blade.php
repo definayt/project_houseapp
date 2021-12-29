@@ -1,32 +1,17 @@
-@extends('template')
+@extends('layouts.app')
 
 @section('content')
 
-<main id="main">
-
-    <!-- ======= Get Started Section ======= -->
-    <!-- <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>House App</h2>
-          <ol>
-            <li><a href="" class="btn-logout"><i class="bi bi-box-arrow-left fs-6 mb-3"></i>  Logout</a></li>
-          </ol>
-        </div>
-
-      </div>
-    </section> -->
 
     <!-- ======= Screenshots Section ======= -->
     <section id="profil" class="padd-section">
 
       <div class="container" data-aos="fade-up">
-        <a href="project_detail_page.html" class="previous-button">&laquo; Kembali</a>
+        <a href="{{ route('project.detail', $data_project->id )}}" class="previous-button">&laquo; Kembali</a>
 
         <div class="section-title text-center">
           <h2>Profil Rumah</h2>
-          <!-- <p class="separator">Integer cursus bibendum augue ac cursus .</p> -->
+
         </div>
 
         <div class="row">
@@ -37,7 +22,7 @@
                   <h4><b>Pemilik Rumah</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  Falah Robbani | 08123444444444
+                  {{ $data_owner->name }} | {{ $data_owner->phone_number }}
                 </div>  
               </div>
             </div>
@@ -51,7 +36,7 @@
                   <h4><b>Kontraktor</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  Falah Robbani | 08123444444444
+                {{ $data_manager->name }} | {{ $data_manager->phone_number }}
                 </div>  
               </div>
             </div>
@@ -65,7 +50,7 @@
                   <h4><b>Pengawas Lapangan</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  Falah Robbani | 08123444444444
+                {{ $data_pengawas->name }} | {{ $data_pengawas->phone_number }}
                 </div>  
               </div>
             </div>
@@ -79,7 +64,7 @@
                   <h4><b>Lokasi</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  <a href="https://goo.gl/maps/xNcZVEzYUCPyQ5Dd6">https://goo.gl/maps/xNcZVEzYUCPyQ5Dd6</a>
+                  <a href="{{ $data_project->location }}" target="_blank">{{ $data_project->location }}</a>
                 </div>  
               </div>
             </div>
@@ -93,7 +78,7 @@
                   <h4><b>Type</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  72
+                {{ $data_project->type }}
                 </div>  
               </div>
             </div>
@@ -107,7 +92,7 @@
                   <h4><b>Luas Bangunan</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  72 m²
+                {{ $data_project->building_area }} m²
                 </div>  
               </div>
             </div>
@@ -121,7 +106,7 @@
                   <h4><b>Luas Tanah</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  100 m²
+                {{ $data_project->land_area }} m²
                 </div>  
               </div>
             </div>
@@ -135,7 +120,7 @@
                   <h4><b>Spesifikasi Rumah</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  3 Kamar tidur, 2 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur
+                {{ $data_project->house_spec }}
                 </div>  
               </div>
             </div>
@@ -149,7 +134,7 @@
                   <h4><b>Jumlah Lantai</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  1 Lantai
+                {{ $data_project->floors }} Lantai
                 </div>  
               </div>
             </div>
@@ -163,7 +148,7 @@
                   <h4><b>Lama Waktu Pengerjaan</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  90 (Hari Kerja)
+                {{ $data_project->work_duration }} (Hari Kerja)
                 </div>  
               </div>
             </div>
@@ -177,7 +162,10 @@
                   <h4><b>RAB</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  Rp1.000.000.000,00
+                  @php
+                    $rab = $data_project->rab;
+                  @endphp
+                  @currency($rab)
                 </div>  
               </div>
             </div>
@@ -187,22 +175,4 @@
       </div>
 
     </section><!-- End Screenshots Section -->
-
-<!-- Modal -->
-<div class="modal fade" id="logoutProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalCenterTitle">Anda yakin Ingin Logout?</h4>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-        <a href="login_page.html" type="button" class="btn btn-logout" >Ya, Logout</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-  </main><!-- End #main -->
-
 @endsection
