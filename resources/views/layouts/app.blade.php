@@ -36,7 +36,8 @@
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <!-- {{ config('app.name', 'House App') }} -->
-                        House App
+                        <img class="logo-img" src="{{ asset('img/logo.png') }}" alt="logo"/>
+          <!-- <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.png" alt="logo"/></a> -->
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"> <i class="bi bi-list mobile-nav-toggle"></i></span>

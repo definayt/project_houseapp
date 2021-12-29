@@ -15,7 +15,7 @@
         <div class="row text-center" data-aos="fade-up" data-aos-delay="100">
 
           <div class="col-md-6 col-lg-3">
-            <a href="profil_rumah_page.html">             
+            <a href="{{ route('house_profile', $data_project->id) }}">             
               <div class="feature-block ">
                 <i class="bi bi-house fs-2 mb-3"></i>
                 <h4>Profil Rumah</h4>
@@ -25,7 +25,7 @@
 
           
           <div class="col-md-6 col-lg-3">
-            <a href="2d_page.html"> 
+            <a href="{{ route('twodimension', $data_project->id) }}"> 
               <div class="feature-block">
                 <i class="bi bi-images fs-2 mb-3"></i>
                 <h4>Gambar 2D</h4>
@@ -34,7 +34,7 @@
           </div>
           
           <div class="col-md-6 col-lg-3">
-            <a href="3d_page.html">
+            <a href="{{ route('threedimension', $data_project->id) }}">
               <div class="feature-block">
                 <i class="bi bi-badge-3d fs-2 mb-3"></i>
                 <h4>Gambar 3D</h4>
@@ -61,7 +61,7 @@
           </div>
 
           <div class="col-md-6 col-lg-3">
-            <a href="rab_page.html">
+            <a href="{{ route('rab', $data_project->id) }}">
               <div class="feature-block">                
                 <i class="bi bi-file-earmark-spreadsheet fs-2 mb-3"></i>
                 <h4>RAB</h4>
@@ -70,7 +70,7 @@
           </div>
 
           <div class="col-md-6 col-lg-3">
-            <a href="dokumen_rumah_page.html">
+            <a href="{{ route('doc_house', $data_project->id) }}">
               <div class="feature-block">
                 <i class="bi bi-file-earmark-pdf fs-2 mb-3"></i>
                 <h4>Dokumen Rumah</h4>

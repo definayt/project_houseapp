@@ -1834,5 +1834,9 @@ section {
   height: 8rem;           
 }
 
+.logo-img{
+  max-width: 30%;
+}
+
 
 

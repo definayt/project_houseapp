@@ -24,4 +24,11 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/project/{id}', [App\Http\Controllers\ProjectController::class, 'index'])->name('project.detail');
 Route::get('/project/time_schedule/{id}', [App\Http\Controllers\ProjectController::class, 'time_schedule'])->name('time_schedule');
+Route::get('/project/twodimension/{id}', [App\Http\Controllers\ProjectController::class, 'twodimension'])->name('twodimension');
+Route::get('/project/threedimension/{id}', [App\Http\Controllers\ProjectController::class, 'threedimension'])->name('threedimension');
+Route::get('/project/doc_house/{id}', [App\Http\Controllers\ProjectController::class, 'doc_house'])->name('doc_house');
+Route::get('/project/rab/{id}', [App\Http\Controllers\ProjectController::class, 'rab'])->name('rab');
+Route::get('/project/house_profile/{id}', [App\Http\Controllers\ProjectController::class, 'house_profile'])->name('house_profile');
+
+
 
