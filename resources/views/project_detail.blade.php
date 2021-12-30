@@ -43,7 +43,7 @@
           </div>
 
           <div class="col-md-6 col-lg-3">
-            <a href="progress_rumah_page.html">
+            <a href="{{ route('progress', $data_project->id) }}">
               <div class="feature-block">
                 <i class="bi bi-hourglass-split fs-2 mb-3"></i>
                 <h4>Progress Rumah</h4>

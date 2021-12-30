@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PhotoProgress;
+use App\Models\Progress;
 use App\Models\Project;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -98,6 +101,41 @@ class ProjectController extends Controller
                            ->first();
 
         return view('house_profile', ['data_project' => $dataProject, 'data_owner' => $dataOwner, 'data_manager' => $dataManager, 'data_pengawas' => $dataPengawas]); 
+    }
+
+    public function progress($id)
+    {
+        $dataProject = Project::select('id', 'working_status', 'start_date', 'end_date', 'work_duration')
+                           ->where('id', '=', $id)
+                           ->first();
+                           
+                           
+        $dataProject->start_date = Carbon::parse($dataProject->start_date)->isoFormat('D MMMM Y');
+        $dataProject->end_date = Carbon::parse($dataProject->end_date)->isoFormat('D MMMM Y');
+
+        $dataProgress = Progress::select('progress.id','date','file_photo')
+                            ->join('photo_progress','progress.id','=','photo_progress.progress_id')
+                            ->where('progress.project_id', '=', $id)
+                            ->groupBy('progress.id')
+                            ->orderBy('date', 'DESC')
+                            ->get();  
+                            
+        foreach($dataProgress as $progress){
+            $progress->date = Carbon::parse($progress->date)->isoFormat('D MMMM Y');
+        }
+
+        return view('progress', ['data_project' => $dataProject, 'data_progress'=>$dataProgress]); 
+    }
+
+    public function progress_detail($id)
+    {
+    	$photo_progress = PhotoProgress::select('*')
+                        ->where('progress_id', '=', $id)
+                        ->get();
+
+	    return response()->json([
+	      'data' => $photo_progress
+	    ]);
     }
 
     /**

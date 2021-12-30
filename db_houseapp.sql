@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2021 at 03:54 PM
+-- Generation Time: Dec 30, 2021 at 03:12 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -61,6 +61,17 @@ CREATE TABLE `photo_progress` (
   `desc` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `photo_progress`
+--
+
+INSERT INTO `photo_progress` (`id`, `progress_id`, `file_photo`, `desc`) VALUES
+(1, 1, '1.jpg', 'Gambar batu belah'),
+(2, 1, '2.jpg', 'Gambar mengaduk semen'),
+(3, 1, '3.jpg', 'Gambar tembok'),
+(4, 2, '4.jpg', 'Gambar pintu'),
+(5, 2, '5.jpg', 'Gambar jendela');
+
 -- --------------------------------------------------------
 
 --
@@ -80,7 +91,8 @@ CREATE TABLE `progress` (
 --
 
 INSERT INTO `progress` (`id`, `project_id`, `date`, `acc_manager`, `acc_pengawas`) VALUES
-(1, 1, '2021-08-31', 1, 1);
+(1, 1, '2021-08-31', 1, 1),
+(2, 1, '2021-11-17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -194,6 +206,7 @@ ALTER TABLE `notes`
 -- Indexes for table `photo_progress`
 --
 ALTER TABLE `photo_progress`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `progress_id` (`progress_id`);
 
 --
@@ -243,10 +256,16 @@ ALTER TABLE `notes`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `photo_progress`
+--
+ALTER TABLE `photo_progress`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `project`
