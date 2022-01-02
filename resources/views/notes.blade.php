@@ -12,12 +12,15 @@
         </div>
         <div class="position-absolute top-right">
             <button type="button" data-toggle="modal" data-target="#addNotesUser" class="previous-button"><i class="bi bi-plus"></i> Tambah Notes</button>
-            <!-- <button type="button" class="btn btn-primary">Click Me!</button> -->
         </div>
 
         <div class="section-title text-center">
           <h2>Notes</h2>
-          <!-- <p class="separator">Integer cursus bibendum augue ac cursus .</p> -->
+          @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+              <h4 id="msg">{{ $message }}</h4>
+            </div>
+          @endif
         </div>
 
         @if($data_project->isEmpty())
@@ -46,8 +49,11 @@
                           @endphp
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
-                          <button type="button" class="btn btn-warning" >Edit</button>
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Hapus</button>
+                          <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
+                            <a href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}">Edit </a>
+                              <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <a id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</a></td>
+                          </form>
                         @endif
                       </div>
                   </div>
@@ -67,8 +73,11 @@
                           @endphp
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
-                          <button type="button" class="btn btn-warning" >Edit</button>
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Hapus</button>
+                          <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
+                            <a href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}">Edit </a>
+                              <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <a id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</a></td>
+                          </form>
                         @endif
                       </div>
                   </div>
@@ -89,8 +98,11 @@
                           @endphp
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
-                          <button type="button" class="btn btn-warning" >Edit</button>
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Hapus</button>
+                          <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
+                            <a type="button" href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}" data-target="#editNotesUser">Edit </a>
+                              <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <button type="button" data-toggle="modal" data-target="#deleteNotes" id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</button></td>
+                          </form>
                         @endif
                       </div>
                   </div>
@@ -105,7 +117,7 @@
     </section><!-- End Screenshots Section -->
 
 
-<!-- Modal -->
+<!-- Modal Tambah-->
 <div class="modal fade" id="addNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -125,8 +137,56 @@
         </div>
       </div>
       <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
         <button type="submit" class="btn btn-logout" >Simpan</button>
-        <button type="button" class="btn btn-logout" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+   <!-- Modal Hapus -->
+<div class="modal fade" id="deleteNotes" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalCenterTitle">Anda Yakin Ingin Menghapus Catatan Ini?</h4>
+      </div>
+      <div class="modal-footer">
+        <form action="{{ route('notes.destroy', 'id') }}" method="post">
+            @csrf
+            @method('DELETE')
+            <input id="id" name="id" type="hidden">
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade" id="editNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalCenterTitle">Edit Notes</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form">
+          <form action="" method="post" role="form" id="formEditNotes">
+            <input type="hidden" id="id_note" name="id_note">
+            <div class="form-group input-group">
+              <textarea type="text" name="description" rows="10" class="form-control" id="description" required></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+        <button type="submit" id="submitEditNote" class="btn btn-logout" >Simpan</button>
       </div>
     </div>
   </div>

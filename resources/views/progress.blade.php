@@ -74,7 +74,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
               <div class="card">
                 <div class="card-body">
-                @if($data_progress->isEmpty())
+                @if($data_progress == null)
                     <h3 class="text-center">Progress Belum Tersedia</h3>
                 @endif
                   <!-- Timeline start -->
@@ -82,12 +82,12 @@
                     @foreach($data_progress as $progress)
                     <div class="timeline-row">
                       <div class="timeline-time">
-                        {{ $progress->date }}
+                        {{ $progress['date'] }}
                       </div>
                       <div class="timeline-dot green-one-bg"></div>
                       <div class="timeline-content">   
-                        <a class="photo_progress" href=""  data-id="{{ $progress->id.'|'.$progress->date }}">
-                          <img src="{{ asset('img/photo_progress/'.$progress->file_photo)}}" class="img-fluid" alt="">
+                        <a data-toggle="modal" data-target=".sliderProgress" class="photo_progress" href=""  data-id="{{ $progress['id'].'|'.$progress['date'] }}">
+                          <img src="{{ asset('img/photo_progress/'.$progress['file_photo'])}}" class="img-fluid" alt="">
                         </a>
                       </div>
                     </div>
@@ -112,9 +112,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title date_progress"></h4>
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button> -->
+        </button>
       </div>
       <div class="modal-body">
         <div class="wrap-modal-slider">
@@ -122,9 +122,9 @@
           </div>
         </div>
       </div>
-      <!-- <div class="modal-footer">
+      <div class="modal-footer">
         <button type="button" class="btn btn-logout" data-dismiss="modal">Close</button>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

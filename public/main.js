@@ -203,10 +203,6 @@
 
 })()
 
-  
-// $(document).ready(function(){
-//   $('.your-class').slick();
-// });
 
 $('.modal').on('shown.bs.modal', function (e) {
   $('.your-class').slick('setPosition');
@@ -222,14 +218,7 @@ $(document).ready(function(){
   });
 });
 
-$(document).ready(function () {
-
-  // $.ajaxSetup({
-  //     headers: {
-  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //         }
-  // });
-  
+$(document).ready(function () {  
   $('body').on('click', '.photo_progress', function (event) {
   
       event.preventDefault();
@@ -238,11 +227,7 @@ $(document).ready(function () {
       var datas = progress.split("|");
       console.log(datas[0])
       $.get('detail/' + datas[0], function (data) {
-           $('.date_progress').text(datas[1]);
-          //  $('#submit').val("Edit category");
-           
-          //  $('#color_id').val(data.data.id);
-          //  $('#name').val(data.data.name);
+          $('.date_progress').text(datas[1]);
           var slicker='<div class="your-class">';
           $.each(data, function() {
             $.each(this, function(k, v) {
@@ -253,19 +238,58 @@ $(document).ready(function () {
           slicker += '</div>';
           document.getElementById("image-slider").innerHTML=slicker;
           $('.your-class').slick();
-          
-
-          
+        
           $('.modal').on('shown.bs.modal', function (e) {
             $('.your-class').slick('setPosition');
             $('.wrap-modal-slider').addClass('open');
           })
-
-          $('.sliderProgress').modal('show');
        })
   });
   
 }); 
 
 
+$(document).on('click','#delete-notes',function(){
+  let id = $(this).attr('data-id');
+  $('#id').val(id);
+});
 
+$.ajaxSetup({
+  headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+});
+
+$('body').on('click', '#edit-notes', function (event) {
+  
+  event.preventDefault();
+  var id = $(this).data('id');
+  
+  $.get('edit/' + id, function (data) {  
+        $('#id_note').val(data.data.id); 
+       document.getElementById('description').innerHTML = data.data.description;
+   })
+});
+
+$('body').on('click', '#submitEditNote', function (event) {
+  event.preventDefault()
+  var id = $("#id_note").val();
+  var description = $('textarea#description').val()
+ 
+  $.ajax({
+    url: 'update/' + id,
+    type: "POST",
+    data: {
+      id: id,
+      description: description,
+    },
+    dataType: 'json',
+    success: function (data) {
+        
+        $('#formEditNotes').trigger("reset");
+        $('#editNotesUser').modal('hide');
+        $('#msg').text("Notes Berhasil Diedit");
+        window.location=data.url;
+    }
+});
+});

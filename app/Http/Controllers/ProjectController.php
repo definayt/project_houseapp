@@ -158,19 +158,40 @@ class ProjectController extends Controller
         $dataProject->start_date = Carbon::parse($dataProject->start_date)->isoFormat('D MMMM Y');
         $dataProject->end_date = Carbon::parse($dataProject->end_date)->isoFormat('D MMMM Y');
 
-        $dataProgress = Progress::select('progress.id','date','file_photo')
+        $dataProgress = Progress::select('progress.id','date','file_photo', 'manager_id', 'pengawas_id', 'acc_manager', 'acc_pengawas')
                             ->join('photo_progress','progress.id','=','photo_progress.progress_id')
+                            ->join('project', 'project.id','=','progress.project_id')
                             ->where('progress.project_id', '=', $id)
                             ->groupBy('progress.id')
                             ->orderBy('date', 'DESC')
                             ->get();  
-                            
-        foreach($dataProgress as $progress){
-            $progress->date = Carbon::parse($progress->date)->isoFormat('D MMMM Y');
+        
+        
+        $dataProgressACC = [];
+        foreach($dataProgress as $data) {
+            if($data->pengawas_id != null){
+                if($data->acc_manager== 1 && $data->acc_pengawas==1){
+                    $dataProgressACC[] = [
+                        'id' => $data->id,
+                        'date' => Carbon::parse($data->date)->isoFormat('D MMMM Y'),
+                        'file_photo' => $data->file_photo
+                    ];
+                }
+            }else{
+                if($data->acc_manager== 1){
+                    $dataProgressACC[] = [
+                        'id' => $data->id,
+                        'date' => Carbon::parse($data->date)->isoFormat('D MMMM Y'),
+                        'file_photo' => $data->file_photo
+                    ];
+                }
+            }
+            
         }
+        
         if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
             Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
-            return view('progress', ['data_project' => $dataProject, 'data_progress'=>$dataProgress, 'hari_ke'=>$count]); 
+            return view('progress', ['data_project' => $dataProject, 'data_progress'=>$dataProgressACC, 'hari_ke'=>$count]); 
         }else{
             return view('no_access');
         }

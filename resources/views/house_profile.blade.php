@@ -50,7 +50,11 @@
                   <h4><b>Pengawas Lapangan</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                {{ $data_pengawas->name }} | {{ $data_pengawas->phone_number }}
+                  @if(!$data_pengawas ==null)
+                    {{ $data_pengawas->name }} | {{ $data_pengawas->phone_number }}
+                  @else
+                    -
+                  @endif
                 </div>  
               </div>
             </div>
