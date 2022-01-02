@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2021 at 03:12 AM
+-- Generation Time: Jan 02, 2022 at 08:50 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -48,6 +48,16 @@ CREATE TABLE `notes` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `notes`
+--
+
+INSERT INTO `notes` (`id`, `project_id`, `creator_id`, `date`, `description`) VALUES
+(1, 1, 1, '2021-08-31', 'Perlu peninjauan ulang persiapan proyek'),
+(2, 1, 2, '2021-09-15', 'Tolong berikan laporan progress secara berkala tiap minggu'),
+(3, 1, 1, '2021-10-05', 'Progress sudah 50% terlaksana harap segera ditinjau untuk pembayaran'),
+(4, 1, 4, '2021-11-12', 'Tolong jika memotret progress pada pagi atau siang hari sehingga gambarnya lebih jelas');
+
 -- --------------------------------------------------------
 
 --
@@ -70,7 +80,8 @@ INSERT INTO `photo_progress` (`id`, `progress_id`, `file_photo`, `desc`) VALUES
 (2, 1, '2.jpg', 'Gambar mengaduk semen'),
 (3, 1, '3.jpg', 'Gambar tembok'),
 (4, 2, '4.jpg', 'Gambar pintu'),
-(5, 2, '5.jpg', 'Gambar jendela');
+(5, 2, '5.jpg', 'Gambar jendela'),
+(6, 3, '6.jpg', 'Lantai');
 
 -- --------------------------------------------------------
 
@@ -92,7 +103,8 @@ CREATE TABLE `progress` (
 
 INSERT INTO `progress` (`id`, `project_id`, `date`, `acc_manager`, `acc_pengawas`) VALUES
 (1, 1, '2021-08-31', 1, 1),
-(2, 1, '2021-11-17', 1, 1);
+(2, 1, '2021-11-17', 1, 1),
+(3, 1, '2021-12-15', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -133,7 +145,7 @@ CREATE TABLE `project` (
 
 INSERT INTO `project` (`id`, `project_name`, `owner_id`, `manager_id`, `pengawas_id`, `lapangan_id`, `location`, `type`, `building_area`, `land_area`, `house_spec`, `floors`, `work_duration`, `rab`, `twod_file`, `threed_link`, `animation_video`, `time_schedule`, `rab_file`, `agreement_doc`, `spec_doc`, `start_date`, `end_date`, `working_status`) VALUES
 (1, 'Rumah Rumahan', 2, 1, 3, 4, 'https://maps.app.goo.gl/mCKw6p8FBDx1ARXcA', 72, 72, 100, '3 Kamar tidur, 2 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 90, '1000000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2021-08-23', '2021-12-20', 100),
-(2, 'My House', 2, 1, 3, 4, 'https://goo.gl/maps/BGLjhypTHELyjzZr5 ', 60, 60, 80, '2 Kamar tidur, 1 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 80, '900000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2022-01-02', '2022-03-25', 5);
+(2, 'My House', 2, 1, 3, 4, 'https://goo.gl/maps/BGLjhypTHELyjzZr5 ', 60, 60, 80, '2 Kamar tidur, 1 kamar mandi, 1 Ruang Tamu, 1 Ruang Keluarga, 1 Dapur', 1, 80, '900000000', 'Assignment.pdf', 'https://3dwarehouse.sketchup.com/embed.html?mid=u33ee83a9-f9a6-4a14-8950-c487ded2ea4a', '2019-06-11 20-42-21.mp4', 'Estimated-Budget-Proposed.xlsx', 'Estimated-Budget-Proposed.xlsx', 'Assignment.pdf', 'Assignment.pdf', '2021-12-31', '2022-03-25', 5);
 
 -- --------------------------------------------------------
 
@@ -182,7 +194,8 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `role_id`, `phone_num
 (1, 'Falah Robbani', 'manager', '$2y$10$vH4S52S3NrsJdlBVbuMEre5h/qhG0uqHpjtMbQaMkEHr7hZNe9Y2e', 1, '085123456789', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
 (2, 'Nama Owner', 'owner', '$2y$10$XdikLPZYaxqAKmj2qmmSY.DNQbj3zWVGr2oywUsp1IY9tYyTtEXNy', 2, '081234567890', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
 (3, 'Nama Pengawas', 'pengawas', '$2y$10$8kxGzi9ZBCLScIDxiMtdruLNVgQofoReOOgngMAxVyC4rgGj4yTre', 3, '088987654321', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
-(4, 'Nama P.Lapangan', 'lapangan', '$2y$10$8skQMyjL4u8TRyRKz5hKOulfNRGylCghPXyAZp2m2GTdpIanYiFJe', 4, '083456789012', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46');
+(4, 'Nama P.Lapangan', 'lapangan', '$2y$10$8skQMyjL4u8TRyRKz5hKOulfNRGylCghPXyAZp2m2GTdpIanYiFJe', 4, '083456789012', NULL, '2021-12-24 19:47:46', '2021-12-24 19:47:46'),
+(5, 'Iqbaal Ramadhan', 'manager_2', '$2y$10$25v9BL71iM.cM77qvaTFrePoMVWjCaq7cnlpmmYGaWYaCYLD7zynW', 1, '089876543221', NULL, '2022-01-02 00:10:54', '2022-01-02 00:10:54');
 
 --
 -- Indexes for dumped tables
@@ -253,19 +266,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `photo_progress`
 --
 ALTER TABLE `photo_progress`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `project`
@@ -283,7 +296,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

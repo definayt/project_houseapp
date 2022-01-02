@@ -203,9 +203,10 @@
 
 })()
 
-$(document).ready(function(){
-  $('.your-class').slick();
-});
+  
+// $(document).ready(function(){
+//   $('.your-class').slick();
+// });
 
 $('.modal').on('shown.bs.modal', function (e) {
   $('.your-class').slick('setPosition');
@@ -220,6 +221,51 @@ $(document).ready(function(){
     infinite: true,
   });
 });
+
+$(document).ready(function () {
+
+  // $.ajaxSetup({
+  //     headers: {
+  //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //         }
+  // });
+  
+  $('body').on('click', '.photo_progress', function (event) {
+  
+      event.preventDefault();
+      var progress = $(this).data('id');
+     
+      var datas = progress.split("|");
+      console.log(datas[0])
+      $.get('detail/' + datas[0], function (data) {
+           $('.date_progress').text(datas[1]);
+          //  $('#submit').val("Edit category");
+           
+          //  $('#color_id').val(data.data.id);
+          //  $('#name').val(data.data.name);
+          var slicker='<div class="your-class">';
+          $.each(data, function() {
+            $.each(this, function(k, v) {
+              slicker+= '<div><img src="../../img/photo_progress/'+v.file_photo+'" class="img-fluid" alt=""><h4 class="text-center">'+v.desc+'</h4></div>';
+            });
+          });
+
+          slicker += '</div>';
+          document.getElementById("image-slider").innerHTML=slicker;
+          $('.your-class').slick();
+          
+
+          
+          $('.modal').on('shown.bs.modal', function (e) {
+            $('.your-class').slick('setPosition');
+            $('.wrap-modal-slider').addClass('open');
+          })
+
+          $('.sliderProgress').modal('show');
+       })
+  });
+  
+}); 
 
 
 

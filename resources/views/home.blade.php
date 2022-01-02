@@ -8,9 +8,14 @@
       <div class="container" data-aos="fade-up">
         <div class="section-title text-center">
           <h2>Daftar Proyek</h2>
-          <p class="separator">Silakan klik pada salah satu proyek untuk melihat detailnya .</p>
+          @if(!$data_project->isEmpty())  
+            <p class="separator">Silakan klik pada salah satu proyek untuk melihat detailnya .</p>
+          @endif
         </div>
-        
+        @if($data_project->isEmpty())
+          <h3>Maaf, Anda belum memiliki Proyek.</h3>
+        @endif
+
         @php
           $row = 0;
           $count = 1

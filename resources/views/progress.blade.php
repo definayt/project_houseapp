@@ -34,7 +34,7 @@
                   <h4><b>Hari Ke</b></h4>                
                 </div>
                 <div class="col-sm-9">
-                  {{ $data_project->work_duration }} Hari Kerja
+                  {{ $hari_ke }} Hari Kerja
                 </div>  
               </div>
             </div>
@@ -74,6 +74,9 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
               <div class="card">
                 <div class="card-body">
+                @if($data_progress->isEmpty())
+                    <h3 class="text-center">Progress Belum Tersedia</h3>
+                @endif
                   <!-- Timeline start -->
                   <div class="timeline">
                     @foreach($data_progress as $progress)
@@ -82,8 +85,10 @@
                         {{ $progress->date }}
                       </div>
                       <div class="timeline-dot green-one-bg"></div>
-                      <div class="timeline-content">                        
-                        <img type="button" data-toggle="modal" data-target="#sliderProgress" src="{{ asset('img/photo_progress/'.$progress->file_photo)}}" class="img-fluid" alt="">
+                      <div class="timeline-content">   
+                        <a class="photo_progress" href=""  data-id="{{ $progress->id.'|'.$progress->date }}">
+                          <img src="{{ asset('img/photo_progress/'.$progress->file_photo)}}" class="img-fluid" alt="">
+                        </a>
                       </div>
                     </div>
                     @endforeach
@@ -102,27 +107,24 @@
     </section><!-- End Screenshots Section -->
 
 <!-- Modal -->
-<div class="modal fade" id="sliderProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade sliderProgress" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">28 November 2021</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h4 class="modal-title date_progress"></h4>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
       </div>
       <div class="modal-body">
         <div class="wrap-modal-slider">
-          <div class="your-class">
-            <div><img src="assets/img/2d/6.jpg" class="img-fluid" alt=""><h4 class="text-center">Gambar Batu Belah</h4></div>
-            <div><img src="assets/img/2d/7.jpg" class="img-fluid" alt=""><h4 class="text-center">Gambar Batu </h4></div>
-            <div><img src="assets/img/2d/8.jpg" class="img-fluid" alt=""><h4 class="text-center">Gambar Belah</h4></div>
+          <div id="image-slider">
           </div>
         </div>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-logout" data-dismiss="modal">Close</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

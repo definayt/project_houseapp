@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notes;
 use App\Models\PhotoProgress;
 use App\Models\Progress;
 use App\Models\Project;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -18,61 +20,86 @@ class ProjectController extends Controller
      */
     public function index($id)
     {
-        $dataProject = Project::select('id', 'project_name')
+        $dataProject = Project::select('id', 'project_name', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('project_detail', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('project_detail', ['data_project' => $dataProject]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     public function time_schedule($id)
     {
-        $dataProject = Project::select('id', 'rab_file')
+        $dataProject = Project::select('id', 'rab_file', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('time_schedule', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+                return view('time_schedule', ['data_project' => $dataProject]);
+        }else{
+            return view('no_access');
+        }
     }
 
     public function twodimension($id)
     {
-        $dataProject = Project::select('id', 'twod_file')
+        $dataProject = Project::select('id', 'twod_file', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('2d', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('2d', ['data_project' => $dataProject]); 
+        }else{
+            return view('no_access');
+        }        
     }
 
     public function threedimension($id)
     {
-        $dataProject = Project::select('id', 'threed_link', 'animation_video')
+        $dataProject = Project::select('id', 'threed_link', 'animation_video', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('3d', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('3d', ['data_project' => $dataProject]); 
+        }else{
+            return view('no_access');
+        }
+        
     }
 
     public function doc_house($id)
     {
-        $dataProject = Project::select('id', 'agreement_doc', 'spec_doc')
+        $dataProject = Project::select('id', 'agreement_doc', 'spec_doc', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('doc_house', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('doc_house', ['data_project' => $dataProject]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     public function rab($id)
     {
-        $dataProject = Project::select('id', 'rab_file')
+        $dataProject = Project::select('id', 'rab_file', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
-
-        return view('rab', ['data_project' => $dataProject]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('rab', ['data_project' => $dataProject]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     public function house_profile($id)
     {
-        $dataProject = Project::select('id', 'location', 'type', 'building_area', 'land_area', 'house_spec', 'floors', 'work_duration', 'rab')
+        $dataProject = Project::select('id', 'location', 'type', 'building_area', 'land_area', 'house_spec', 'floors', 'work_duration', 'rab', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
 
@@ -99,15 +126,33 @@ class ProjectController extends Controller
         $dataPengawas = User::select('name', 'phone_number')
                            ->where('id', '=', $pengawas_id->pengawas_id)
                            ->first();
-
-        return view('house_profile', ['data_project' => $dataProject, 'data_owner' => $dataOwner, 'data_manager' => $dataManager, 'data_pengawas' => $dataPengawas]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('house_profile', ['data_project' => $dataProject, 'data_owner' => $dataOwner, 'data_manager' => $dataManager, 'data_pengawas' => $dataPengawas]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     public function progress($id)
     {
-        $dataProject = Project::select('id', 'working_status', 'start_date', 'end_date', 'work_duration')
+        $dataProject = Project::select('id', 'working_status', 'start_date', 'end_date', 'work_duration', 'manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
                            ->where('id', '=', $id)
                            ->first();
+
+        $start = strtotime($dataProject->start_date);
+        if (strtotime(Carbon::now()) > strtotime($dataProject->end_date)){
+            $end = strtotime($dataProject->end_date);
+        }else{
+            $end = strtotime(Carbon::now());
+        }
+        
+        $count = 0;
+        while(date('Y-m-d', $start) < date('Y-m-d', $end)){
+            $count += date('N', $start) < 6 ? 1 : 0;
+            $start = strtotime("+1 day", $start);
+        }
+        
                            
                            
         $dataProject->start_date = Carbon::parse($dataProject->start_date)->isoFormat('D MMMM Y');
@@ -123,19 +168,48 @@ class ProjectController extends Controller
         foreach($dataProgress as $progress){
             $progress->date = Carbon::parse($progress->date)->isoFormat('D MMMM Y');
         }
-
-        return view('progress', ['data_project' => $dataProject, 'data_progress'=>$dataProgress]); 
+        if(Auth::user()->id==$dataProject->manager_id || Auth::user()->id==$dataProject->owner_id || 
+            Auth::user()->id==$dataProject->pengawas_id || Auth::user()->id==$dataProject->lapangan_id){
+            return view('progress', ['data_project' => $dataProject, 'data_progress'=>$dataProgress, 'hari_ke'=>$count]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     public function progress_detail($id)
     {
-    	$photo_progress = PhotoProgress::select('*')
+    	$photo_progress = PhotoProgress::select('file_photo', 'desc')
                         ->where('progress_id', '=', $id)
                         ->get();
+
 
 	    return response()->json([
 	      'data' => $photo_progress
 	    ]);
+    }
+
+    public function notes($id)
+    {
+        $dataProject = Notes::select('notes.id', 'project_id', 'creator_id', 'date', 'description', 'users.name')
+                            ->join('users','users.id','=','notes.creator_id')
+                           ->where('project_id', '=', $id)
+                           ->orderBy('notes.id')
+                           ->get();
+
+        foreach ($dataProject as $project){
+            $project->date = Carbon::parse($project->date)->isoFormat('D MMMM Y');
+        }
+
+        $data_project = Project::select('manager_id', 'owner_id', 'pengawas_id', 'lapangan_id')
+                        ->where('id', '=', $id)
+                        ->first();
+
+        if(Auth::user()->id==$data_project->manager_id || Auth::user()->id==$data_project->owner_id || 
+            Auth::user()->id==$data_project->pengawas_id || Auth::user()->id==$data_project->lapangan_id){
+            return view('notes', ['data_project' => $dataProject, 'project_id'=>$id]); 
+        }else{
+            return view('no_access');
+        }
     }
 
     /**

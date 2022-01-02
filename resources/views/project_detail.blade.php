@@ -79,7 +79,7 @@
           </div>
 
           <div class="col-md-6 col-lg-3">
-            <a href="notes_page.html">
+            <a href="{{ route('notes', $data_project->id) }}">
               <div class="feature-block">
                 <i class="bi bi-stickies fs-2 mb-3"></i>
                 <h4>Notes</h4>
