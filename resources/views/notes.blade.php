@@ -11,7 +11,7 @@
             <a href="{{ route('project.detail', $project_id )}}" class="previous-button">&laquo; Kembali</a>
         </div>
         <div class="position-absolute top-right">
-            <button type="button" data-toggle="modal" data-target="#addNotesUser" class="previous-button"><i class="bi bi-plus"></i> Tambah Notes</button>
+            <button id="add-note" type="button" data-toggle="modal" data-target=".addNotesUser" class="previous-button"><i class="bi bi-plus"></i> Tambah Notes</button>
         </div>
 
         <div class="section-title text-center">
@@ -50,9 +50,9 @@
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
                           <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
-                            <a href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}">Edit </a>
+                            <a href="javascript:void(0)" class="btn btn-warning edit-notes" data-toggle="modal" data-id="{{ $project->id }}" data-target=".editNotesUser">Edit </a>
                               <meta name="csrf-token" content="{{ csrf_token() }}">
-                            <a id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</a></td>
+                              <button type="button" data-toggle="modal" data-target="#deleteNotes" id="" data-id="{{ $project->id }}" class="btn btn-danger delete-notes">Delete</button>
                           </form>
                         @endif
                       </div>
@@ -74,9 +74,9 @@
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
                           <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
-                            <a href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}">Edit </a>
+                            <a href="javascript:void(0)" class="btn btn-warning edit-notes" data-toggle="modal" data-id="{{ $project->id }}" data-target=".editNotesUser">Edit </a>
                               <meta name="csrf-token" content="{{ csrf_token() }}">
-                            <a id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</a></td>
+                              <button type="button" data-toggle="modal" data-target="#deleteNotes" id="" data-id="{{ $project->id }}" class="btn btn-danger delete-notes">Delete</button>
                           </form>
                         @endif
                       </div>
@@ -99,9 +99,9 @@
                         </ul>
                         @if($project->creator_id == Auth::user()->id)
                           <form action="{{ route('notes.destroy',$project->id) }}" method="POST">
-                            <a type="button" href="javascript:void(0)" class="btn btn-warning" id="edit-notes" data-toggle="modal" data-id="{{ $project->id }}" data-target="#editNotesUser">Edit </a>
+                            <a type="button" href="javascript:void(0)" class="btn btn-warning edit-notes" data-toggle="modal" data-id="{{ $project->id }}" data-target=".editNotesUser">Edit </a>
                               <meta name="csrf-token" content="{{ csrf_token() }}">
-                            <button type="button" data-toggle="modal" data-target="#deleteNotes" id="delete-notes" data-id="{{ $project->id }}" class="btn btn-danger">Delete</button></td>
+                            <button type="button" data-toggle="modal" data-target="#deleteNotes" id="" data-id="{{ $project->id }}" class="btn btn-danger delete-notes">Delete</button>
                           </form>
                         @endif
                       </div>
@@ -118,7 +118,7 @@
 
 
 <!-- Modal Tambah-->
-<div class="modal fade" id="addNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade addNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -129,16 +129,18 @@
       </div>
       <div class="modal-body">
         <div class="form">
-          <form action="" method="post" role="form">
+          <form action="" method="post" role="form" class ="formAddNotes">
+            <input type="hidden" id="id_note" name="id_note">
+            <input type="hidden" id="project_id" name="project_id" value="{{ $project_id }}">
             <div class="form-group input-group">
-              <textarea type="text" name="description" rows="10" class="form-control" id="note" placeholder="Tuliskan Catatan" required></textarea>
+              <textarea autofocus type="text" name="description" rows="10" class="form-control" id="description" placeholder="Tuliskan Catatan" required></textarea>
             </div>
           </form>
         </div>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-logout" >Simpan</button>
+        <button type="submit" class="btn btn-logout submitAddNote">Simpan</button>
       </div>
     </div>
   </div>
@@ -152,12 +154,12 @@
         <h4 class="modal-title" id="exampleModalCenterTitle">Anda Yakin Ingin Menghapus Catatan Ini?</h4>
       </div>
       <div class="modal-footer">
-        <form action="{{ route('notes.destroy', 'id') }}" method="post">
-            @csrf
-            @method('DELETE')
-            <input id="id" name="id" type="hidden">
+        <form action="" method="post">
+            <!-- @csrf
+            @method('DELETE') -->
+            <input id="id_delete" name="id" type="hidden">
             <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>
-            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+            <button type="submit" class="btn btn-sm btn-danger submitDeleteNotes">Hapus</button>
         </form>
       </div>
     </div>
@@ -165,7 +167,7 @@
 </div>
 
 <!-- Modal Edit-->
-<div class="modal fade" id="editNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade editNotesUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -176,17 +178,17 @@
       </div>
       <div class="modal-body">
         <div class="form">
-          <form action="" method="post" role="form" id="formEditNotes">
-            <input type="hidden" id="id_note" name="id_note">
+          <form action="" method="post" role="form" class="formEditNotes">
+            <input type="hidden" id="id_note_edit" name="id_note">
             <div class="form-group input-group">
-              <textarea type="text" name="description" rows="10" class="form-control" id="description" required></textarea>
+              <textarea autofocus type="text" name="description" rows="10" class="form-control" id="description_edit" required></textarea>
             </div>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-        <button type="submit" id="submitEditNote" class="btn btn-logout" >Simpan</button>
+        <button type="submit"  class="btn btn-logout submitEditNote" >Simpan</button>
       </div>
     </div>
   </div>

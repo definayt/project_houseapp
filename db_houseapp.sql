@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 02, 2022 at 04:38 PM
+-- Generation Time: Jan 04, 2022 at 04:12 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -54,9 +54,10 @@ CREATE TABLE `notes` (
 
 INSERT INTO `notes` (`id`, `project_id`, `creator_id`, `date`, `description`) VALUES
 (1, 1, 1, '2021-08-31', 'Perlu peninjauan ulang persiapan proyek'),
-(2, 1, 2, '2021-09-15', 'Tolong berikan laporan progress secara berkala tiap minggu'),
+(2, 1, 2, '2021-09-15', 'Tolong berikan laporan progress secara berkala tiap minggu. Jangan sampai lupa ya'),
 (3, 1, 1, '2021-10-05', 'Progress sudah 50% terlaksana harap segera ditinjau untuk pembayaran'),
-(8, 1, 3, '2021-11-03', 'Tolong Jika Memotret Progress Pada Pagi Atau Siang Hari Sehingga Gambarnya Lebih Jelas.');
+(8, 1, 3, '2021-11-03', 'Tolong Jika Memotret Progress Pada Pagi Atau Siang Hari Sehingga Gambarnya Lebih Jelas.'),
+(13, 2, 2, '2022-01-04', 'Tolong segera dimulai');
 
 -- --------------------------------------------------------
 
@@ -270,7 +271,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `photo_progress`

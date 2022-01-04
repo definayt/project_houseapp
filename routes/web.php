@@ -33,6 +33,11 @@ Route::get('/project/house_profile/{id}', [App\Http\Controllers\ProjectControlle
 Route::get('/project/progress/{id}', [App\Http\Controllers\ProjectController::class, 'progress'])->name('progress');
 Route::get('/project/progress/detail/{id}', [App\Http\Controllers\ProjectController::class, 'progress_detail'])->name('progress_detail');
 Route::get('/project/notes/{id}', [App\Http\Controllers\ProjectController::class, 'notes'])->name('notes');
+Route::delete('/project/notes/destroy/{id}', [App\Http\Controllers\NotesController::class, 'destroy'])->name('notes.destroy');
+Route::get('/project/notes/edit/{id}', [App\Http\Controllers\NotesController::class, 'edit'])->name('notes.edit');
+Route::post('/project/notes/update/{id}', [App\Http\Controllers\NotesController::class, 'update'])->name('notes.update');
+Route::post('/project/notes/store', [App\Http\Controllers\NotesController::class, 'store'])->name('notes.store');
+
 
 
 

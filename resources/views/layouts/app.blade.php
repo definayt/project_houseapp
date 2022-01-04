@@ -7,6 +7,7 @@
   <title>House App</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
  
   <!-- Favicons -->
   <link href="{{ asset('img/favicon.png') }}" rel="icon">
@@ -137,6 +138,7 @@
 <script type="text/javascript" src="{{ asset('vendor/glightbox/js/glightbox.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/php-email-form/validate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <!-- Template Main JS File -->
 <script type="text/javascript" src="{{ asset('main.js') }}"></script>

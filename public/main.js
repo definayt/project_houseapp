@@ -260,21 +260,21 @@ $.ajaxSetup({
       }
 });
 
-$('body').on('click', '#edit-notes', function (event) {
+$('body').on('click', '.edit-notes', function (event) {
   
   event.preventDefault();
   var id = $(this).data('id');
   
   $.get('edit/' + id, function (data) {  
-        $('#id_note').val(data.data.id); 
-       document.getElementById('description').innerHTML = data.data.description;
+        $('#id_note_edit').val(data.data.id); 
+       document.getElementById('description_edit').innerHTML = data.data.description;
    })
 });
 
-$('body').on('click', '#submitEditNote', function (event) {
+$('body').on('click', '.submitEditNote', function (event) {
   event.preventDefault()
-  var id = $("#id_note").val();
-  var description = $('textarea#description').val()
+  var id = $("#id_note_edit").val();
+  var description = $('textarea#description_edit').val()
  
   $.ajax({
     url: 'update/' + id,
@@ -285,11 +285,104 @@ $('body').on('click', '#submitEditNote', function (event) {
     },
     dataType: 'json',
     success: function (data) {
+        $('.formEditNotes').trigger("reset");
+        $('.editNotesUser').modal('hide');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          text: data.message,
+          showConfirmButton: false,
+          timer: 3000
+        });
+        setTimeout(function(){
+          window.location.reload(true);
+       }, 3000);
+    },
+    error: function (data) {
+      console.log('Error......');
+  }
+});
+});
+
+$('body').on('click', '#add-notes', function (event) {
+  $('.formAddNotes').trigger("reset");
+});
+
+//Save data into database
+$('body').on('click', '.submitAddNote', function (event) {
+  event.preventDefault()
+  var id = $("#id_note").val();
+  var project_id = $("#project_id").val();
+  var description = $('textarea#description').val()
+ 
+  $.ajax({
+    url: "store",
+    type: "POST",
+    data: {
+      id: id,
+      description: description,
+      project_id: project_id
+    },
+    dataType: 'json',
+    success: function (data) {
+        $('.formAddNotes').trigger("reset");
+        $('.addNotesUser').modal('hide');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          text: data.message,
+          showConfirmButton: false,
+          timer: 3000
+        });
+        setTimeout(function(){
+          window.location.reload(true);
+       }, 3000);
         
-        $('#formEditNotes').trigger("reset");
-        $('#editNotesUser').modal('hide');
-        $('#msg').text("Notes Berhasil Diedit");
-        window.location=data.url;
+    },
+    error: function (data) {
+        console.log('Error......');
+    }
+});
+});
+
+$('body').on('click', '.delete-notes', function (event) {
+  
+  event.preventDefault();
+  var id = $(this).data('id');
+  $("#id_delete").val(id);
+  
+});
+
+$('body').on('click', '.submitDeleteNotes', function (event) {
+  
+  event.preventDefault()
+  var id = $("#id_delete").val();
+  $.ajax({
+    url: 'destroy/' + id,
+    type: "DELETE",
+    data: {
+      id: id
+    },
+    dataType: 'json',
+    success: function (data) {
+        $('#deleteNotes').modal('hide');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Success',
+          text: data.message,
+          showConfirmButton: false,
+          timer: 3000
+        });
+        setTimeout(function(){
+          window.location.reload(true);
+       }, 3000);
+        
+    },
+    error: function (data) {
+        console.log('Error......');
     }
 });
 });

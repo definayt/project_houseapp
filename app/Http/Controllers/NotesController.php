@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Notes;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotesController extends Controller
 {
@@ -37,7 +39,17 @@ class NotesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Notes::insert(
+            
+            [
+              'description' => $request->description,
+              'creator_id' => Auth::user()->id,
+              'project_id' => $request->project_id,
+              'date' => Carbon::now()->toDateString()
+            ]
+          );
+     
+        return response()->json([ 'success' => true, 'message' => 'Notes Berhasil Disimpan']);
     }
 
     /**
@@ -78,15 +90,12 @@ class NotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id_project = Notes::select('project_id')
-                        ->where('id','=',$id)
-                        ->first()->project_id;
         $notes = Notes::find($id);
         $notes->timestamps = false;
         $notes->description = $request->description;
         $notes->save();
      
-        return response()->json([ 'success' => true, 'url'=> redirect()->to('project/notes/'.$id_project)->with('success','Notes berhasil dihapus') ]);
+        return response()->json([ 'success' => true, 'message' => 'Notes Berhasil Diubah']);
     }
 
     /**
@@ -95,16 +104,16 @@ class NotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $id = $request->id;
+        // $id = $request->id;
 
-        $id_project = Notes::select('project_id')
-                        ->where('id','=',$id)
-                        ->first()->project_id;
+        // $id_project = Notes::select('project_id')
+        //                 ->where('id','=',$id)
+        //                 ->first()->project_id;
 		Notes::where('id',$id)->delete();
         
-		return redirect()->to('project/notes/'.$id_project)->with('success','Notes berhasil dihapus'); 
+		return response()->json([ 'success' => true, 'message' => 'Notes Berhasil Dihapus']);
 	
     }
 }
